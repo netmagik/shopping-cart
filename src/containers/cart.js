@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Button} from 'react-bootstrap';
-import EditQuantity from '../components/Product/forms/EditProductForm';
+
 
 const cart = (props) => {
 
@@ -24,12 +24,6 @@ const cart = (props) => {
                 <div key={prod.id} className="mt-4 mb-2 bg-light border pb-4">
                     <h4 className="mt-3">{prod.name}</h4>
                     <div className="pb-2"><strong>{prod.quantity} x ${prod.price}</strong></div>
-
-                    <EditQuantity
-                        setEditing={props.setEditing}
-                        currentProduct={props.currentProduct}
-                        updateQuantity={props.updateQuantity}
-                    />
 
                         <Button className="mr-2" 
                             variant="outline-dark" 

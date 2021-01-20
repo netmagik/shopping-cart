@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Cart from './containers/cart';
 import {Container, Row, Col} from 'react-bootstrap';
+import EditQuantity from './components/Product/forms/EditProductForm';
 
 const App = () => {
 
@@ -54,8 +55,16 @@ const App = () => {
   return (
       <Container>
         <Row className="justify-content-center">
-          <Col md={{ span: 6}} className="text-center">
-      <Cart 
+          <Col md={{ span: 8}} className="text-center">
+
+        {editing ? (
+          <EditQuantity
+          setEditing={setEditing}
+          
+      />
+
+        ) : (
+          <Cart 
         products={products} 
         deleteProduct={deleteProductHandler}
         totalQuantity={totalQuantity}
@@ -65,6 +74,8 @@ const App = () => {
         updateQuantity={updateQuantity}
         currentProduct={currentProduct}
       />
+        )}
+           
       </Col>
       </Row>
       </Container>
