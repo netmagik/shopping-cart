@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import Cart from './containers/cart';
+import React, {useState} from 'react';
+import Cart from './containers/Cart';
 import {Container, Row, Col} from 'react-bootstrap';
-import EditQuantity from './components/Product/forms/EditProductForm';
+import Summary from './components/Product/Summary';
 
 const App = () => {
 
@@ -12,12 +12,8 @@ const App = () => {
     { id: 23, name: 'BREAD', quantity: 3, price: 4.50}
   ]
 
-  const initialEditState = { id: null, name: '', quantity: '', price: ''};
 
   const [products, setProducts] = useState(initial);
-  const [editing, setEditing] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState(initialEditState);
-
   // Delete Product
   const deleteProductHandler = (id) => {
     setProducts(products.filter((product) => product.id !== id));
@@ -31,6 +27,7 @@ const App = () => {
   // Calculate Total Price
   const sumTotal = products =>
   products.reduce((sum, { price, quantity }) => sum + price * quantity, 0);
+  
   const totalPrice = sumTotal(products).toFixed(2);
 
   //Clear Shopping Cart
@@ -40,41 +37,26 @@ const App = () => {
     setProducts(updatedProducts)
   }
 
-  // Edit Mode is Selected
-  const editProduct = (product) => {
-    setEditing(true);
-    setCurrentProduct({product})
-  }
-
-  // Update Quantity
-  const updateQuantity = (id, updatedProduct) => {
-    setEditing(false)
-    setProducts(products.map((product) => (product.id === id ? updatedProduct : product)))
-  }
-
+  // // Update Quantity
+  // const updateQuantity = (id, updatedProduct) => {
+  //   setEditing(false)
+  //   setProducts(props.products.map((product) => (product.id === id ? updatedProduct : product)))
+  // }
+  
   return (
       <Container>
         <Row className="justify-content-center">
           <Col md={{ span: 8}} className="text-center">
-
-        {editing ? (
-          <EditQuantity
-          setEditing={setEditing}
+          <Summary 
+            totalQuantity={totalQuantity} 
+            totalPrice={totalPrice}   
+            clearAll={clearAll} 
+            products={products}   />
           
-      />
-
-        ) : (
           <Cart 
-        products={products} 
-        deleteProduct={deleteProductHandler}
-        totalQuantity={totalQuantity}
-        totalPrice={totalPrice}
-        clearAll={clearAll}
-        editProduct={editProduct}
-        updateQuantity={updateQuantity}
-        currentProduct={currentProduct}
-      />
-        )}
+            products={products} 
+            deleteProduct={deleteProductHandler}
+          />
            
       </Col>
       </Row>

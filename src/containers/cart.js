@@ -1,51 +1,39 @@
-import React, {Fragment} from 'react';
-import {Button} from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import Product from '../components/Product/Product';
 
 
-const cart = (props) => {
+const Cart = (props) => {
+    const [products, setProducts] = useState([]);
 
+    useEffect(() => {
+        setProducts(props.products)
+    }, [props])
+
+    const updateProduct = (updatedProduct) => {
+        const updatedProducts = products.map((prod) => {
+            if (prod.id === updatedProduct.id) {
+                return updatedProduct;
+            }
+            return prod;
+        })
+        .filter((prod) => prod.quantity > 0 )
+        setProducts(updatedProducts);
+    }
 
     return (
-            <Fragment>
-            <h1 className="mt-5">Shopping Cart</h1>
-            <div>Number of items:
-                <strong>{props.totalQuantity}</strong>
-            </div>
-            <div>Total: <strong>${props.totalPrice}</strong></div>
-            <div>
-                <Button 
-                    className="m-3" 
-                    variant="outline-dark" 
-                    onClick={props.clearAll}
-                    disabled={!props.products || props.products.length === 0}>
-                    Clear Shopping Cart
-                </Button></div>
-            <div className="mt-6 mb-4">{props.products.map((prod) => (
-                <div key={prod.id} className="mt-4 mb-2 bg-light border pb-4">
-                    <h4 className="mt-3">{prod.name}</h4>
-                    <div className="pb-2"><strong>{prod.quantity} x ${prod.price}</strong></div>
 
-                        <Button className="mr-2" 
-                            variant="outline-dark" 
-                            onClick={() => {props.editProduct(prod.id)}}>
-                                Change Quantity
-                            </Button>
-                         <Button variant="outline-dark"
-                            onClick={() => props.deleteProduct(prod.id)}>
-                             Remove
-                         </Button>
-                     
-                </div>
+            <div className="mt-6 mb-4">
+                {products.map((prod) => (
+                <Product 
+                    product={prod}
+                    key={prod.id} 
+                    deleteProduct={props.deleteProduct}
+                    onChange={updateProduct}
+                    />
                 ))
                 }
             </div>
-            
-           
-            </Fragment>
-            
-    //         </div>
-    //     </div>
     )
 }
 
-export default cart;
+export default Cart;
