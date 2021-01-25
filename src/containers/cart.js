@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Product from '../components/Product/Product';
+import Summary from '../components/Product/Summary';
+
 
 
 const Cart = (props) => {
@@ -20,9 +22,31 @@ const Cart = (props) => {
         setProducts(updatedProducts);
     }
 
-    return (
+      // Calculate Total Number of items
+    const totalQuantity = products.reduce((total, b) => {
+        return (total + b.quantity)
+    }, 0);
 
-            <div className="mt-6 mb-4">
+    // Calculate Total Price
+    const sumTotal = products =>
+        products.reduce((sum, { price, quantity }) => sum + price * quantity, 0);
+  
+        const totalPrice = sumTotal(products).toFixed(2);
+
+    //Clear Shopping Cart
+    const clearAll = () => {
+        setProducts([])
+  }
+
+    return (
+        <>
+            <Summary 
+                totalQuantity={totalQuantity} 
+                totalPrice={totalPrice}   
+                clearAll={clearAll} 
+                products={products}   />
+
+            <div className="my-3">
                 {products.map((prod) => (
                 <Product 
                     product={prod}
@@ -33,6 +57,7 @@ const Cart = (props) => {
                 ))
                 }
             </div>
+        </>
     )
 }
 

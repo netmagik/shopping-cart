@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FormControl, Form, FormGroup, FormLabel, Button} from 'react-bootstrap';
+import {FormControl, Form, Row, FormGroup, FormLabel, Button} from 'react-bootstrap';
 
 const EditQuantity = (props) => {
 
@@ -41,21 +41,22 @@ const EditQuantity = (props) => {
             onSubmit={(event) => {
                 event.preventDefault();
             }}> 
-
-            <FormGroup>
-            <FormLabel style={{display: 'inline'}}>Quantity: </FormLabel>
+            <Row>
+            <FormGroup className="ml-4">
+            <FormLabel className="mr-2">Quantity: </FormLabel>
             <FormControl
+                size="sm"
                 type="text"
                 name="quantity"
                 value={quantity}
                 onChange={handleInputChange}
                 />
             </FormGroup>
-      
+
             <FormGroup>
+            <div className="btn-group ml-2" role="group">
             <Button 
                 variant="outline-dark" 
-                className="ml-2"
                 onClick={addOne}>
                     Add one
             </Button>
@@ -65,9 +66,11 @@ const EditQuantity = (props) => {
                 onClick={removeOne}>
                     Remove one
             </Button>
+            </div>
+
+            <div className="btn-group ml-2" role="group">
             <Button 
                 variant="outline-dark" 
-                className="ml-2"
                 onClick={save}
                 disabled={quantity === props.quantity}>
                     Save
@@ -77,7 +80,10 @@ const EditQuantity = (props) => {
                 onClick={props.toggleEditing}>
                     Cancel
             </Button>
+            </div>
             </FormGroup>
+        
+            </Row>
         </Form>
         </>
     )

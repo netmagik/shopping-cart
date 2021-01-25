@@ -5,14 +5,11 @@ import EditForm from './forms/EditProductForm';
 const Product = (props) => {
 
     const [editing, setEditing] = useState(false);
-    // const initialEditState = { id: null, name: '', quantity: '', price: ''};
-    // const [currentProduct, setCurrentProduct] = useState(initialEditState);
 
 
     // Edit Mode is Selected
     const editProduct = (product) => {
     setEditing(true);
-    // setCurrentProduct({product})
     }
 
     const toggleEditing = () => {
@@ -33,8 +30,6 @@ const Product = (props) => {
             {editing ? (
                 <EditForm 
                     product={props.product}
-                    // quantity={props.prod.quantity}
-                    // price={props.prod.price}
                     onSaveQuantity={onChange}
                     toggleEditing={toggleEditing}
                     />
